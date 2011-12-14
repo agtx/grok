@@ -10,9 +10,12 @@
 	<body>
 		<div class="container">
 			<%= render 'layouts/header' %>
+			
 			<section class = "round">
-				<%flash.each do |key, value| %>
-				<%= content_tag(:div, value, :class => "flash #{key}")%>
+
+				<%- flash.each do |name, msg| -%>
+				    <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) %>
+				
 				<% end %>
 				<%= yield %>
 			</section>

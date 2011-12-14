@@ -1,6 +1,20 @@
 Grok::Application.routes.draw do
 
   
+  devise_for :users
+
+  get "users/new"
+
+  get "users/edit"
+
+  get "users/update"
+
+  get "users/destroy"
+
+  get "users/show"
+
+  get "users/create"
+
   root :to => "pages#home"
   match '/about', :to => "pages#about"
   match '/help', :to => "pages#help"
