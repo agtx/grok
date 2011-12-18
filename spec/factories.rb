@@ -1,6 +1,4 @@
 
-Factory.find_definitions
-
 Factory.define :user do |user|
   user.email                       'gilad@example.com'
   user.password                    'foobar'
@@ -9,4 +7,15 @@ end
 
 Factory.sequence :email do |n|
   "person-#{n}@example.com"
+end
+
+Factory.define :list do |list|
+  list.name "Foo bar"
+  list.association :user
+end
+
+
+Factory.define :task do |task|
+  task.description "Foo bar"
+  task.association :list
 end

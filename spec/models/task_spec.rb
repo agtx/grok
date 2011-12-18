@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe "users/new.html.erb" do
+describe Task do
   pending "add some examples to (or delete) #{__FILE__}"
 end

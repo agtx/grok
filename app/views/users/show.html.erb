@@ -1,2 +1,19 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+
+<table class="profile" summary="Profile information">
+  <tr>
+    <td class="main">
+      <h1>
+        <%= @user.email %>
+
+		<%= link_to "Make a new list! ", new_list_url, :class => "signup_button round" %>
+
+      </h1>
+	<% if @user.lists.any? %>
+		<table class="lists" summary="User lists">
+	      <%= render @lists  %>
+		</table>
+		<%= will_paginate @lists %>
+	 <% end %>
+    </td>
+  </tr>
+</table>

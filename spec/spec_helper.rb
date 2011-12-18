@@ -1,6 +1,4 @@
-require 'rubygems'
 require 'spork'
-
 
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However, 
@@ -10,10 +8,16 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
 
+  #stop devise from preloading user
+  require "rails/application"
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+  require File.dirname(__FILE__) + "/../config/environment.rb"
+
   # Requires supporting files with custom matchers and macros, etc,
   # in ./support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+  
   RSpec.configure do |config|
     # == Mock Framework
     #
@@ -22,6 +26,8 @@ Spork.prefork do
     # config.mock_with :mocha
     # config.mock_with :flexmock
     # config.mock_with :rr
+    
+    
     config.mock_with :rspec
 
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -30,6 +36,11 @@ Spork.prefork do
     # examples within a transaction, comment the following line or assign false
     # instead of true.
     config.use_transactional_fixtures = true
+  end
+  
+  
+  def test_sign_in(user)
+    controller.sign_in(user)
   end
 end
 

@@ -1,2 +1,24 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<% if signed_in? %>
+  <table class="front" summary="For signed-in users">
+    <tr>
+      <td class="main">
+        
+        <%= render 'shared/list_form' %>
+		<h1 class="lists"><%= @today_list %></h1>
+      </td>
+		</tr>
+	</table>
+
+<% else  %>
+
+	<h1>Grok</h1>
+	<p>
+	  This is the home page for the
+					
+					Grok
+
+	</p>
+
+	<%= link_to "Sign up now! ", new_user_registration_path, :class => "signup_button round" %>
+
+<% end %>

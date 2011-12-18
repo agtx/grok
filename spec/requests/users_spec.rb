@@ -24,13 +24,13 @@ describe "Users" do
         it "should make a new user" do
           lambda do
             visit new_user_registration_path
-            fill_in "Email",                   :with => "user@example.com"
+            fill_in "Email",                   :with => "intuser@example.com"
             fill_in "Password",                :with => "foobar"
             fill_in "Password confirmation",   :with => "foobar"
             click_button
             response.should have_selector("div#flash_notice",
                                           :content => "successfully")
-            response.should render_template('pages/home')
+            response.should render_template('users/show')
           end.should change(User, :count).by(1)
         end
      end
@@ -52,7 +52,7 @@ describe "Users" do
       
       describe "success" do
         it "should sign a user in and out" do
-          user = Factory(:user)
+          user = Factory(:user, :email => Factory.next(:email))
           visit new_user_session_path
           fill_in "Email",         :with => user.email
           fill_in "password",      :with => user.password

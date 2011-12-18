@@ -1,23 +1,26 @@
 Grok::Application.routes.draw do
 
+  devise_for :users do 
+    resources :lists,       :only => [:create, :destroy, :index]
+       resources :tasks,     :only => [:create, :destroy, :index]
+  end
   
-  devise_for :users
+  resources :users, :only => ["show"]    
+  
+  as :user do
+      get "/login" => "devise/sessions#new"
+      get "/logout" => "devise/sessions#destroy"
+  end
 
-  get "users/new"
+  match 'user_root' => 'users#show'  
 
-  get "users/edit"
+  root :to => 'pages#home'    
+  
+   match '/about', :to => 'pages#about'
+   match '/help', :to => 'pages#help'
+   
 
-  get "users/update"
-
-  get "users/destroy"
-
-  get "users/show"
-
-  get "users/create"
-
-  root :to => "pages#home"
-  match '/about', :to => "pages#about"
-  match '/help', :to => "pages#help"
+  
   
   
   # The priority is based upon order of creation:
