@@ -3,16 +3,14 @@ class UsersController < ApplicationController
 
 
   def index
-    @title = "To-do lists"
-    @lists = List.paginate(:page => params[:page])
-    @users = User.all
+    # @title = "To-do lists"
+    # @lists = List.paginate(:page => params[:page])
+    # @users = User.all
+    @users = User.paginate(:page => params[:page])
   end
 
   def new
     @user = User.new
-  end
-
-  def edit
   end
 
   def update
@@ -24,12 +22,13 @@ class UsersController < ApplicationController
        render 'edit'
      end
   end
-  
-
 
   def destroy
+    User.find(params[:id]).destroy
+    flash[:success] = "User destroyed."
+    redirect_to users_path
   end
-
+  
   def show
     @user = current_user
     @lists = @user.lists.paginate(:page => params[:page])

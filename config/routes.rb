@@ -5,7 +5,7 @@ Grok::Application.routes.draw do
        resources :tasks,     :only => [:create, :destroy, :index]
   end
   
-  resources :users, :only => ["show"]
+  resources :users, :only => [:show, :index, :destroy]
   
   as :user do
       get "/login" => "devise/sessions#new"
@@ -18,7 +18,7 @@ Grok::Application.routes.draw do
    
    match '/about', :to => 'pages#about'
    match '/help', :to => 'pages#help'
-   
+
 
   
   

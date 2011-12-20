@@ -15,12 +15,15 @@ class ListsController < ApplicationController
   #   
   
   def index
-    @lists = current_user.lists
-    self.current_list = nil
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @projects }
-    end
+     # @lists = current_user.lists
+     # self.current_list = nil
+     # respond_to do |format|
+     #   format.html # index.html.erb
+     #   format.json { render json: @lists }
+     # end
+      @user  = current_user
+      @lists = @user.lists.paginate(:page => params[:page])
+      self.current_list = nil
   end  
   
   def create

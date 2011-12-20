@@ -1,21 +1,11 @@
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-		<th></th>
-  </tr>
 
-<% @lists.each do |lists| %>
-  <tr>
-		<td><%= list.name %></td>
-    <td><%= link_to 'Show', list %></td>
-    <td><%= link_to 'Edit', edit_list_path(list) %></td>
-    <td><%= link_to 'Destroy', list, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+<h1><%= @user.email %>'s lists</h1>  
+
+
+<%= will_paginate %>
+
+<table class="lists">
+  <%= render @lists %>
 </table>
 
-<br />
-
-<!-- <%= link_to 'New list', new_list_path %> -->
+<%= will_paginate %>
