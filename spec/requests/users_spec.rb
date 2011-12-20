@@ -1,3 +1,4 @@
+
 require 'spec_helper'
 
 describe "Users" do
@@ -30,7 +31,7 @@ describe "Users" do
             click_button
             response.should have_selector("div#flash_notice",
                                           :content => "successfully")
-            response.should render_template('users/show')
+            response.should render_template('pages/home')
           end.should change(User, :count).by(1)
         end
      end

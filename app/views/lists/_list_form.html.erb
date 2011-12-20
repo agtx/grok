@@ -1,0 +1,12 @@
+
+<%= form_for( @user.lists.build(:name => Date.tomorrow.strftime("%A"))) do |f| %>
+
+  <div><%= f.hidden_field :user_id %></div>										
+  <div><%= f.hidden_field :name %></div>										
+  <div class="actions"><%= f.submit "Plan for tomorrow" %></div>						
+	
+<% end %>
+
+
+
+<!-- , :remote => true -->

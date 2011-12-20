@@ -1,6 +1,19 @@
 class ListsController < ApplicationController
   before_filter :authenticate_user!
   
+  respond_to :html, :xml
+  
+
+  
+  # respond_to :html, :js
+  # 
+  #   def create
+  #     @user = User.find(params[:relationship][:followed_id])
+  #     current_user.follow!(@user)
+  #     respond_with @user
+  #   end
+  #   
+  
   def index
     @title = "To-do lists"
     @user  = User.find(params[:user_id])
@@ -8,17 +21,16 @@ class ListsController < ApplicationController
   end  
   
   def create
-    @user = User.find(params[:user_id])
-    @date = Select_day(Time.now).to_s
-    @today_list = @user.lists.build(params[:list, :name => @date])
-    # if @list.save 
-    #   flash[:success] = "New list created"
-    #   redirect_to @list
-    # else
-    #   flash[:error] = "List must have a name"
-    #   redirect_to root_path
-    # end
-    # @today_list = @list.name params[:name => @date])
+    @user = current_user
+    # @list = @user.lists.find(params[:list])
+    # respond_with @user
+    @tomorrow_list = build_list_for_tomorrow(@user)
+    if @tomorrow_list.save 
+     redirect_to root_path
+    else
+      flash[:error] = "List must have a name"
+      redirect_to root_path
+    end
   end
   
   

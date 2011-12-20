@@ -20,6 +20,13 @@ module ApplicationHelper
     user == current_user
   end
 
+  #A repulsive duplication from ApplicationController in order to "help" the rake task (instead of 
+  #adding a "require ApplicationHelper" to the controller which is even worse!). To be fixed!
+  def make_list_for_today(user)
+    user.lists.create!(:name => Time.now.strftime("%A"))
+    @list = user.lists.build(:name => Time.now.strftime("%A"))
+  end
+
 
   
 end

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_filter :authenticate_user!, :except => [:create, :new, :show]
 
 
@@ -48,12 +47,4 @@ class UsersController < ApplicationController
       render 'new'      
     end
   end
-
-  private
-        # 
-        # def correct_user
-        #   @user = User.find(params[:id])
-        #   redirect_to(root_path) unless current_user?(@user)
-        # end
-    
-end
+end 
