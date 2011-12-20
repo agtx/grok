@@ -1,12 +1,8 @@
-# get rspec command to fix devise controller 
-
-
-
 # require 'spec_helper'
 # describe UsersController do
 #   render_views
 #   
-#     
+# 
 #   describe "GET 'new'" do
 #     it "should be successful" do
 #       get :new
@@ -18,7 +14,7 @@
 # 
 #     before (:each) do
 #       @user = Factory(:user, :email => Factory.next(:email))
-#         test_sign_in @user
+#         login_user @user
 #       end
 # 
 #     it "should be successful" do
@@ -31,7 +27,7 @@
 # 
 #       before(:each) do
 #         @user = Factory(:user, :email => Factory.next(:email))
-#         test_sign_in(@user)
+#         login_user(@user)
 #       end
 # 
 #     describe "failure" do
@@ -99,8 +95,8 @@
 # 
 #     before(:each) do
 #       wrong_user = Factory(:user, :email => "user1@example.net")
-#       test_sign_in(wrong_user)
-#       test_sign_in(@user)
+#       login_user(wrong_user)
+#       login_user(@user)
 #     end  
 #     
 #     it "should require matching users for 'edit'" do

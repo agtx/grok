@@ -11,4 +11,12 @@ class ApplicationController < ActionController::Base
     @tomorrow_list = user.lists.build(:name => Date.tomorrow.strftime("%A"))
   end
   
+  def current_list
+    current_user.lists.find(session[:list_id])
+  end
+  
+  def current_list=(list)
+    session[:list_id] = list.try(:id)
+  end
+  
 end

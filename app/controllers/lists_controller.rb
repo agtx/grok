@@ -15,9 +15,12 @@ class ListsController < ApplicationController
   #   
   
   def index
-    @title = "To-do lists"
-    @user  = User.find(params[:user_id])
-    @lists = List.paginate(:page => params[:page])
+    @lists = current_user.lists
+    self.current_list = nil
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @projects }
+    end
   end  
   
   def create
