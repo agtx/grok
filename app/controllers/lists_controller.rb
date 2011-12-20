@@ -1,29 +1,14 @@
 class ListsController < ApplicationController
   before_filter :authenticate_user!
-  
+  # before_filter :authorized_user
   respond_to :html, :xml
-  
-
-  
-  # respond_to :html, :js
-  # 
-  #   def create
-  #     @user = User.find(params[:relationship][:followed_id])
-  #     current_user.follow!(@user)
-  #     respond_with @user
-  #   end
-  #   
+   
   
   def index
-     # @lists = current_user.lists
-     # self.current_list = nil
-     # respond_to do |format|
-     #   format.html # index.html.erb
-     #   format.json { render json: @lists }
-     # end
+
       @user  = current_user
       @lists = @user.lists.paginate(:page => params[:page])
-      self.current_list = nil
+
   end  
   
   def create
@@ -68,11 +53,11 @@ class ListsController < ApplicationController
 end
 
 
-    # 
-    # private
-    #   
-    # def authorized_user
-    #   @user  = current_user
-    #   @list = @user.lists.find_by_id(params[:id])
-    #   redirect_to root_path if @list.nil?
-    # end
+    
+  private
+    
+  def authorized_user
+    @user  = current_user
+    @list = @user.lists.find_by_id(params[:id])
+    redirect_to root_path if @list.nil?
+  end

@@ -13,6 +13,11 @@ describe ListsController do
       delete :destroy, :id => 1, :user_id => 1
       response.should redirect_to(new_user_session_path)
     end
+    
+    it "should deny access to 'index'" do
+      get :index, :id => 1, :user_id => 1
+      response.should redirect_to(new_user_session_path)
+    end
   end
   
   describe "POST create" do
@@ -54,7 +59,8 @@ describe ListsController do
         post :create, :id => @list, :user_id => @list, @list.name => @attr
         end.should change(List, :count).by(1)
       end
-      
+    end  
+  
       # describe "daily list creation" do
     
       #Testing cronjobs is proving too time consuming and will be put in later
@@ -64,94 +70,64 @@ describe ListsController do
       #     response.should redirect_to(root_path)
       #     response.should have_selector('h1', :content => Time.now.strftime("%A"))
       #   end
-      # end
+
       
-      describe "list for tomorrow" do
-        
-        it "should re-render the home page" do
-          post :create, :id => @list, :user_id => @list, @list.name => @attr
-          response.should redirect_to root_path
-        end
+    describe "list for tomorrow" do
+      
+      before(:each) do
+        @attr = Time.now.strftime("%A")        
+        @list = Factory(:list, :user => @user)
+      end
+      
+      it "should re-render the home page" do
+        post :create, :id => @list, :user_id => @list, @list.name => @attr
+        response.should redirect_to root_path
       end
     end
   end
-    # 
-    # describe "GET :index" do
-    #   
-    #   before(:each) do
-    #    @user = test_sign_in(Factory(:user, :email => Factory.next(:email)))
-    #    @list = Factory(:list, :user => @user)
-    #    @list2 = Factory(:list, :user => @user, :name => "vadf")
-    #    @lists = [@list, @list2]
-    #    35.times do
-    #      @lists << Factory(:list, :user => @user)
-    #     end  
-    #   end
-    #   
-    #   it "should be successful" do
-    #     get :index, :id => @user 
-    #     response.should be_success 
-    #   end
-    # 
-    #   it "should have the right title" do
-    #     get :index, :id => @user 
-    #     response.should have_selector("title",
-    #                                   :name => @base_title + " | To-do lists")
-    #   end
-    #   
-    #   it "should have an element for each user" do
-    #     get :index , :id => @user 
-    #     List.paginate(:page => 1).each do |list|
-    #       response.should have_selector('h2', :name => list.name)        
-    #     end
-    #   end
-    #   
-    #   it "should paginate lists" do
-    #     get :index
-    #     response.should have_selector("div.pagination")
-    #   end
-    # end
-    # 
-    # 
-    # describe "GET 'show'" do
-    # 
-    #    before(:each) do
-    #      @user = test_sign_in(Factory(:user))
-    #      @list = Factory(:list, :user => @user)
-    #    end
-    #    
-    #    it "should be successful" do
-    #       get :show, :id => @list
-    #       response.should be_success
-    #     end
-    # 
-    #     it "should find the right list" do
-    #      get :show, :id => @list
-    #      assigns(:list).should == @list
-    #     end
-    #     
-    #     it "should include the list's name" do
-    #       get :show, :id => @list
-    #       response.should have_selector("h2", :name => @list.name)
-    #     end
-    # end
-    # 
-    # describe "DELETE 'destroy'" do
-    #   
-    #   before(:each) do
-    #      @user = test_sign_in(Factory(:user))
-    #      @list = Factory(:list, :user => @user)
-    #   end
-    #   
-    #   it "should destroy the list" do
-    #     lambda do
-    #       delete :destroy, :id => @list
-    #     end.should change(List, :count).by(-1)
-    #   end
-    #   
-    #   it "should redirect to the lists page" do
-    #     delete :destroy, :id => @list
-    #     response.should redirect_to(lists_path) 
-    #   end
-    # end
+
+
+  
+  describe "lists associations" do
+    
+    before(:each) do
+      @user = Factory(:user)
+      @list1 = Factory(:list, :user => @user, :created_at => 1.day.ago)
+      @list2 = Factory(:list, :user => @user, :created_at => 1.hour.ago)
+    end
+    
+    it "should have a list attribute" do
+      @user.should respond_to(:lists)
+    end
+    
+    it "should destroy associated lists" do
+      @user.destroy
+      [@list1, @list2].each do |list|
+        List.find_by_id(list.id).should be_nil
+      end
+    end
+    
+    it "should have the right lists in the the right order" do
+      @user.lists.should == [@list2, @list1]
+    end
+  end
+  
+  describe "DELETE 'destroy'" do
+    
+    before(:each) do
+       @user = test_sign_in(Factory(:user))
+       @list = Factory(:list, :user => @user)
+    end
+    
+    it "should destroy the list" do
+      lambda do
+        delete :destroy, :id => @list
+      end.should change(List, :count).by(-1)
+    end
+    
+    it "should redirect to the lists page" do
+      delete :destroy, :id => @list
+      response.should redirect_to(lists_path) 
+    end
+  end
 end

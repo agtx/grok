@@ -1,0 +1,13 @@
+<tr>
+  <td class="list">
+    <span class="user">
+      <%= link_to feed_item.user.email, feed_item.user %>
+    </span>
+    <span class="content"><%= wrap(feed_item.content) %></span>
+  </td>
+	  <td>
+  	<%= link_to "delete",  [@user, feed_item], :method => :delete,
+	  									 :confirm => "You sure?",
+										 :title => feed_item.content %>
+	  </td>
+</tr>

@@ -18,6 +18,7 @@ Grok::Application.routes.draw do
    
    match '/about', :to => 'pages#about'
    match '/help', :to => 'pages#help'
+   match '/show', :to => 'users#show'
 
 
   

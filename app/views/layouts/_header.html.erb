@@ -2,14 +2,19 @@
 	<%= link_to logo, root_path %>
 	<nav class="round">
 		<ul>
-			<!-- <li><%= link_to "help", help_path %>  </li> -->
 			<li><% if user_signed_in? %>
 					<%= current_user.email %>
-					<%= link_to "Edit", edit_user_registration_path(current_user) %> 
-					<%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+					<%= link_to "Edit", 
+								 edit_user_registration_path(current_user) %> 
+					<%= link_to "Lists", show_path %>
+					<%= link_to "help", help_path %>
+					<%= link_to "Sign out", destroy_user_session_path,
+					 							:method => :delete %>
 				<% else %>
+					<%= link_to "help", help_path %>
 					<%= link_to "Sign up", new_user_registration_path %> or 
 					<%= link_to "Sign in", new_user_session_path %>
+								
 				<% end %>
 				</li>
 		</ul>

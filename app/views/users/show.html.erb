@@ -2,10 +2,10 @@
 <h1><%= @user.email %>'s lists</h1>  
 
 
-<%= will_paginate %>
+<%= will_paginate @lists%>
 
 <table class="lists">
   <%= render @lists %>
 </table>
 
-<%= will_paginate %>
+
