@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :email, :password, :password_confirmation, :remember_me
   
-  has_many :lists,                 :dependent   => :destroy
+  has_many :lists, :order => "position", :dependent => :destroy
  
- accepts_nested_attributes_for :lists
+  accepts_nested_attributes_for :lists
  
  
 end

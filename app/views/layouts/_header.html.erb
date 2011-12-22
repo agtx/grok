@@ -6,7 +6,7 @@
 					<%= current_user.email %>
 					<%= link_to "Edit", 
 								 edit_user_registration_path(current_user) %> 
-					<%= link_to "Lists", show_path %>
+					<%= link_to "Lists", 'users/show' %>
 					<%= link_to "help", help_path %>
 					<%= link_to "Sign out", destroy_user_session_path,
 					 							:method => :delete %>

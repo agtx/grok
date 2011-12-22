@@ -1,0 +1,11 @@
+<div id="list_nav">	
+	<%= link_to(root_path) do %>
+
+	<% List.previous(current_user.id, @list.id) %> previous_list
+
+	<% end %>
+</div>
+
+
+
+<!-- , :remote => true -->

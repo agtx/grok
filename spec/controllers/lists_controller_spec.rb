@@ -32,13 +32,13 @@ describe ListsController do
         @attr = ""
       end
       
-      # it "should not create list" do               -------fix devise validation for rspec in order for this to work
-      #   lambda do
-      #     @list = Factory(:list, :user => @user, :name => @attr)
-      #     post :create, :id => @list, :user_id => @list
-      #   end.should_not change(List, :count)
-      # end
-      
+            it "should not create list" do
+              lambda do
+                @list = Factory(:list, :user => @user, :name => @attr)
+                post :create, :id => @list, :user_id => @list
+              end.should_not change(List, :count)
+            end
+            
       it "should re-render the home page" do
         post :create, :id => @list, :user_id => @list, :name => @attr
           response.should redirect_to root_path
@@ -64,7 +64,7 @@ describe ListsController do
       # describe "daily list creation" do
     
       #Testing cronjobs is proving too time consuming and will be put in later
-      
+        
       #   it "should display named after the current day" do
       #     post :create, :id => @list, :user_id => @list, @list.name => @attr
       #     response.should redirect_to(root_path)
@@ -75,13 +75,18 @@ describe ListsController do
     describe "list for tomorrow" do
       
       before(:each) do
-        @attr = Time.now.strftime("%A")        
+        @attr = Date.tomorrow.strftime("%A")        
         @list = Factory(:list, :user => @user)
       end
       
       it "should re-render the home page" do
         post :create, :id => @list, :user_id => @list, @list.name => @attr
         response.should redirect_to root_path
+      end
+      
+      it "should have tomorrow's title'" do
+        post :create, :id => @list, :user_id => @list, @list.name => @attr
+        response.should have_selector('h1', @attr)
       end
     end
   end

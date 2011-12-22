@@ -26,7 +26,8 @@ module ApplicationHelper
     user.lists.create!(:name => Time.now.strftime("%A"))
     @list = user.lists.build(:name => Time.now.strftime("%A"))
   end
-
-
   
+  # def user_list
+  #     current_user.lists
+  # end
 end

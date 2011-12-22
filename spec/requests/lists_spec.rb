@@ -3,8 +3,9 @@ require 'spec_helper'
 describe "lists" do
   
   before(:each) do
-    user = test_sign_in(Factory(:user))
+    user = Factory(:user)
     visit new_user_session_path
+    click_button
     fill_in :email,     :with => user.email
     fill_in :password,  :with => user.password
     click_button
@@ -26,7 +27,11 @@ describe "lists" do
   
   describe "navigation" do
     
-    it "should be able to navigate between lists"
+    it "should be able to navigate between lists" do
+      visit root_path
+      click_button "next"
+      
+    end
   
   end
 end

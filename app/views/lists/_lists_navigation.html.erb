@@ -1,0 +1,5 @@
+	<div id="list_navig">
+	<% unless current_user.lists.all == [@list] %>
+	<%= render "lists/previous_list" %>
+	<% end %>
+	</div>
