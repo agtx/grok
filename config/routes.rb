@@ -1,25 +1,33 @@
 Grok::Application.routes.draw do
-
-  devise_for :users do 
-    resources :lists,       :only => [:create, :destroy, :index]
-       resources :tasks,     :only => [:create, :destroy, :index]
-  end
   
-  resources :users, :only => [:show, :index, :destroy]
+  devise_for :users
+
+  resources :users, :only => [:show, :index, :destroy] 
+  resources :lists, :only => [:create, :destroy, :index] do
+    get :back_one_list, on: :member 
+  end  
+
+  match 'lists(/action)' => "pages#home"
+
+  
+  
+  resources :tasks,     :only => [:create, :destroy, :index]
   
   as :user do
       get "/login" => "devise/sessions#new"
       get "/logout" => "devise/sessions#destroy"
   end
 
-  match 'user_root' => 'pages#home'  
+  
 
   root :to => 'pages#home'    
-   
-   match '/about', :to => 'pages#about'
-   match '/help', :to => 'pages#help'
-   match '/show', :to => 'users#show'
-
+  
+  controller :pages do
+    
+  match '/about', :to => 'pages#about'
+  match '/help', :to => 'pages#help'
+  match '/show', :to => 'pages#show'
+end
 
   
   

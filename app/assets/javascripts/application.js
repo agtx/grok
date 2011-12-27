@@ -9,6 +9,14 @@
 //= require jquery_ujs
 //= require_tree .
 
+
+$('#previous_list').click(function(event){
+  	$.ajax("/pages/back_one_list")
+});
+
+
+
+
 // 	var	email = $( "#email" ),
 // 		password = $( "#password" ),
 // 		allFields = $( [] ).add( email ).add( password ),

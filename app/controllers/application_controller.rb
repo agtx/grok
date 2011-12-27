@@ -1,28 +1,35 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  helper_method :make_list_for_today, :tommorow_date, :today_date, :current_list
+  helper_method :make_list_for_today, :current_list, 
+                :default_location?, :back_one_list, :list_relative_tomorrow
+
+
+  def after_sign_in_path_for(resource)
+          return request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+  end  
   
   def make_list_for_today(user)
-    @list = user.lists.create!(:name => Time.now.strftime("%A"))
+    @list = user.lists.create!(:name => Date.today)
+    current_list = @list
+    cookies[:current_list_id] = { :value => @list.id, :expires => 5.minutes.from_now }
   end
   
-  def build_list_for_tomorrow(user)
-    @tomorrow_list = user.lists.build(:name => Date.tomorrow.strftime("%A"))
+  def list_relative_tomorrow
+  	  current_list.name.to_date.advance(:days => 1)
   end
-  
-  def today_date
-    Time.now.strftime("%A")
+
+  def current_list=(list)
+   @current_list = list   
+    cookies[:current_list_id] = { :value => list.id, :expires => 5.minutes.from_now }
   end
-  
-  def tommorow_date
-    Date.tomorrow.strftime("%A")
-  end
-  
+
   def current_list
-    List.find_by_user_id(current_user.id)
+      @current_list ||= current_user.lists.find_by_id(cookies[:current_list_id])
   end
   
-  
+  def default_location?(user, list)
+    list == List.default_location(user)
+  end
   
 end

@@ -15,19 +15,10 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
-
-  def current_user?(user)
-    user == current_user
-  end
-
-  #A repulsive duplication from ApplicationController in order to "help" the rake task (instead of 
-  #adding a "require ApplicationHelper" to the controller which is even worse!). To be fixed!
-  def make_list_for_today(user)
-    user.lists.create!(:name => Time.now.strftime("%A"))
-    @list = user.lists.build(:name => Time.now.strftime("%A"))
-  end
   
-  # def user_list
-  #     current_user.lists
-  # end
+  def today_list?(list)
+    List.default_location(current_user).first == @list  
+  end
+
+
 end

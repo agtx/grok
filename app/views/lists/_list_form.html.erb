@@ -1,10 +1,13 @@
 
-<%= form_for( @user.lists.build(:name => Date.tomorrow.strftime("%A"))) do |f| %>
 
-  <div><%= f.hidden_field :user_id %></div>										
-  <div><%= f.hidden_field :name %></div>										
+
+
+<%= form_for current_user.lists.build(:name => list_relative_tomorrow) do |f| %>
+
+  <div><%= f.hidden_field :name %></div>
+
   <div class="actions"><%= f.submit "Plan for tomorrow" %></div>						
-	
+
 <% end %>
 
 

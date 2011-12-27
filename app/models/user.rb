@@ -5,12 +5,12 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessor :password
+
   attr_accessible :email, :password, :password_confirmation, :remember_me
   
   has_many :lists, :order => "position", :dependent => :destroy
  
-  accepts_nested_attributes_for :lists
- 
+  accepts_nested_attributes_for :lists, :allow_destroy => :true
+
  
 end

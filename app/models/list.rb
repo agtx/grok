@@ -1,6 +1,5 @@
 class List < ActiveRecord::Base
 
-  attr_accessor :id
   attr_accessible :name, :user_id
   belongs_to :user  
     acts_as_list :scope => :user
@@ -8,14 +7,13 @@ class List < ActiveRecord::Base
 
   validates :name,     :presence => true
   validates :user_id,  :presence => true
-
-  scope :made_this_week, where("created_at >= ? AND created_at <= ?", 
-                               DateTime.now.beginning_of_week, DateTime.now.end_of_week)
-
-  def self.default_location
-    @list = List.made_this_week.find_by_name(Time.now.strftime("%A"))
-    
-  end
   
+  scope :default_location, lambda { |user| find_today(user).where(:user_id => user.id) }
+  
+  def self.find_today(user)
+    made_this_week = user.lists.where("lists.created_at >= ? AND lists.created_at <= ?", 
+                       DateTime.now.beginning_of_week, DateTime.now.end_of_week).limit(1)
+    todayslist = made_this_week.where(:name => Date.today)
+  end
   
 end

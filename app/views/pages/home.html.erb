@@ -3,9 +3,13 @@
     <tr>
       <td class="main">
 		<h1 class="Todaylist">
-		<%= @list.name %></h1>
-		
+
+		<%= @list.name.to_date.strftime("%A") %></h1>
+
+<%= @list.name %>
+
 		<%= render 'lists/list_form' %> 
+		<%= render 'lists/lists_navigation' %> 
       </td>
 
 		</tr>
