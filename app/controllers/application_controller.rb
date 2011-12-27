@@ -32,4 +32,8 @@ class ApplicationController < ActionController::Base
     list == List.default_location(user)
   end
   
+  def back_one_list
+    @current_list = @current_list.higher_item
+    cookies[:current_list_id] = { :value => @current_list.id, :expires => 5.minutes.from_now }
+  end
 end

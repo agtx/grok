@@ -9,9 +9,11 @@
 //= require jquery_ujs
 //= require_tree .
 
+$(document).ready(function(){
+	$('#previous_list').click(function(){
+  		$.ajax("/lists/back_one_list")
 
-$('#previous_list').click(function(event){
-  	$.ajax("/pages/back_one_list")
+	});
 });
 
 
