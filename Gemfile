@@ -12,6 +12,7 @@ gem 'coffee-script'
 gem 'uglifier'
 
 gem 'jquery-rails'
+gem 'rack-pjax'
 
 group :development do
   gem 'rspec-rails', '2.6.1'

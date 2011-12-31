@@ -10,7 +10,7 @@ Factory.sequence :email do |n|
 end
 
 Factory.define :list do |list|
-  list.name "Foo bar"
+  list.name "temp"
   list.association :user
 end
 

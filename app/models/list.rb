@@ -15,5 +15,7 @@ class List < ActiveRecord::Base
                        DateTime.now.beginning_of_week, DateTime.now.end_of_week).limit(1)
     todayslist = made_this_week.where(:name => Date.today)
   end
+
+
   
 end

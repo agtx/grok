@@ -17,7 +17,7 @@ module ApplicationHelper
   end
   
   def today_list?(list)
-    List.default_location(current_user).first == @list  
+    List.default_location(current_user).first == list  
   end
 
 

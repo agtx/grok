@@ -11,7 +11,9 @@
 }
 
 body {
-  background: #F5F5F5;
+  background: #F1F7E2;
+  font-family: Arial,sans-serif;
+  font-size: 13px;
 }
 
 header {
@@ -28,6 +30,7 @@ section {
   font-size: 120%;
   padding: 20px;
   background: #fff;
+
 }
 
 section h1 {
@@ -123,4 +126,22 @@ ul.hmenu li {
 #flash_alert {
   background-color: #FCC;
   border: solid 1px #C66;
+}
+
+
+/* ========== */
+/* = Footer = */
+/* ========== */
+
+
+footer {
+  text-align: center;
+  margin-top: 10px;
+  width: 710px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer nav {
+  float: none;
 }

@@ -7,14 +7,9 @@
 //= require jquery
 //= require jquery-ui
 //= require jquery_ujs
+//= require jquery.pjax
 //= require_tree .
 
-$(document).ready(function(){
-	$('#previous_list').click(function(){
-  		$.ajax("/lists/back_one_list")
-
-	});
-});
 
 
 

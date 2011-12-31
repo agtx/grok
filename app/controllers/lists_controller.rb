@@ -1,29 +1,30 @@
 class ListsController < ApplicationController
   before_filter :authenticate_user!
-  respond_to :html, :xml, :js
-   
+
   
   def index
-    @user  = current_user
-    @lists = @user.lists.paginate(:page => params[:page])
-  end  
-  
-  def create
-    @list = current_user.lists.build(params[:list])
-    if @list.save
-      cookies[:current_list_id] = {:value => @list.id, :expires => 5.minutes.from_now }
-      self.current_list = @list
-      respond_with(@list) do |format|
-        format.html { redirect_to root_path, notice: 'list created.' }
-      end
-    else
-      self.current_list = nil
-      respond_with(@list) do |format|
-      format.html { render "pages/home" }
-      end
+    @user = current_user
+    if @user.lists.empty?
+      @list = @user.lists.create!(:name => Date.today)
+    else                 
+      @list = params[:list_id] ? List.find(params[:list_id]) : List.default_location(@user).first
     end
   end
   
+  def create
+    @user = current_user
+    @list = @user.lists.build(params[:list])
+    if @list.save
+     self.current_list = @list
+      redirect_to lists_path(:list_id => @list.id)
+    else
+      render lists_path(:list_id => @list.higher_item), notice: "fail"
+    end
+  end
+  
+  def show
+    @list = List.find(params[:id])
+  end
   
   def edit
     @list = List.find(params[:id])
@@ -33,7 +34,7 @@ class ListsController < ApplicationController
     @list = List.find(params[:id])
     if @list.update_attributes(params[:list])
       flash[:success] = "List updated"
-      redirect_to @list
+      redirect_to list_home_path
     else
       @title = "Edit list"
       render 'edit'
@@ -45,9 +46,11 @@ class ListsController < ApplicationController
     @list = @user.lists.find(params[:id])
     if @list.destroy 
       flash[:success] = "List destroyed"
-    else
+      else
       flash[:error] = "Could not destroy list"
     end
     redirect_to lists_path
   end
+    
 end
+

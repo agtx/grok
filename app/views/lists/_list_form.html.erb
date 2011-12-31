@@ -1,12 +1,5 @@
 
-<%= form_for current_user.lists.build(:name => list_relative_tomorrow) do |f| %>
-
+<%= form_for @user.lists.build(:name => @list.name.to_date.advance(:days => 1)) do |f| %>
   <div><%= f.hidden_field :name %></div>
-
-  <div class="actions"><%= f.submit "Plan for tomorrow" %></div>						
-
+  <div class="actions" ><%= f.submit "Plan for tomorrow" %></div>						
 <% end %>
-
-
-
-<!-- , :remote => true -->

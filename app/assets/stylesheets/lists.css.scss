@@ -1,3 +1,44 @@
-// Place all the styles related to the Lists controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+/* ==================== */
+/* = lists navigation = */
+/* ==================== */
+
+
+#current_list h3 {
+   font-family: Georgia,"Nimbus Roman No9 L",serif;
+   font-size: 23px;
+   font-style: italic;
+   text-align: center;
+}
+
+@mixin nav_button {
+   
+	border: 1px solid #DCDCDC;
+    margin: 0 0 40px 0;
+    padding: 0 20px;
+    color: #4C4C4C;
+    float: right;
+	width: 145px;
+    font-family: Georgia,"Nimbus Roman No9 L",serif;
+    font-size: 14px;
+    padding: 5px 10px 4px;
+    background: #EDEDED;
+    position: relative;
+    bottom: 48px;
+   	text-align: center;   
+    
+	&:hover {
+	background: none repeat scroll 0 0 #696969;
+	color: #FFFFFF;}
+}		
+
+.actions input, .forwardlist h2 a {
+   @include nav_button;
+}
+
+.backlist h2 a {
+   @include nav_button;
+   right: 330px;
+
+}
+	

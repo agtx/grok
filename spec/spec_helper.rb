@@ -38,12 +38,16 @@ Spork.prefork do
     
     #Help user controller work with devise
     config.include Devise::TestHelpers, :type => :controller
+
+    config.before(:each) do
+      Timecop.return
+    end
   end
-  
   
   def test_sign_in(user)
     controller.sign_in(user)
   end
+  
 end
 
 Spork.each_run do

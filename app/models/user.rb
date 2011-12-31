@@ -12,5 +12,6 @@ class User < ActiveRecord::Base
  
   accepts_nested_attributes_for :lists, :allow_destroy => :true
 
+
  
 end

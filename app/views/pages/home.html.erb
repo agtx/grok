@@ -1,30 +1,9 @@
-<% if signed_in? %>
-  <table class="front" summary="For signed-in users">
-    <tr>
-      <td class="main">
-		<h1 class="Todaylist">
+<h1>Grok</h1>
 
-		<%= @list.name.to_date.strftime("%A") %></h1>
+<p>
+  This is the home page for the
+				
+				Grok
+</p>
 
-<%= @list.name %>
-
-		<%= render 'lists/list_form' %> 
-		<%= render 'lists/lists_navigation' %> 
-      </td>
-
-		</tr>
-	</table>
-
-<% else  %>
-
-	<h1>Grok</h1>
-
-	<p>
-	  This is the home page for the
-					
-					Grok
-	</p>
-
-	<%= link_to "Sign up now! ", new_user_registration_path, :class => "signup_button round" %>
-
-<% end %>
+<%= link_to "Sign up now! ", new_user_registration_path, :class => "signup_button round" %>

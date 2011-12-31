@@ -1,0 +1,43 @@
+
+<table class="front" summary="For signed-in users">
+	<tr>
+	    <td class="main">
+			<table summary="Todaylist">
+				<tr>
+					<td>		
+						<div data-pjax-container>
+
+						  <% if @list %>
+						    <div id="current_list">
+								<h3><%= @list.name.to_date.strftime("%A") %></h3>
+							</div>
+							<% current_list = @list %>
+						  <% end %>
+			
+						  <% if @list == @user.lists.last %>
+							<%= render 'lists/list_form' %>
+
+						  <% else %>				
+		   					<div class="forwardlist">
+								<h2>
+									<%= link_to "Plan for tomorrow", :list_id => current_list.lower_item.id %> 
+								</h2>
+							</div>  
+						  <% end %>
+
+					 	</div>				
+								
+						<% unless today_list?(current_list) %>
+							<div class="backlist">
+							    <h2>
+							      <%= link_to "back", :list_id => current_list.higher_item.id %> 
+								</h2>
+							</div>
+						<% end %>
+					</td>
+				</tr>
+			</table>
+	    </td>
+	</tr>
+</table>
+

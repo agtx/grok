@@ -24,17 +24,16 @@ describe "Users" do
      describe "success" do
 
         it "should make a new user" do
-                  lambda do
-                    visit new_user_registration_path
-                    fill_in "Email",                   :with => "intuser@example.com"
-                    fill_in "Password",                :with => "foobar"
-                    fill_in "Password confirmation",   :with => "foobar"
-                    click_button "Sign up"
-                    response.should have_selector("div#flash_notice",                           
-                                                  :content => "successfully")                     
-                    response.should render_template('devise/registrations/new')
-                  end.should change(User, :count).by(1)
-                end
+          lambda do
+            visit new_user_registration_path
+            fill_in "Email",                   :with => "intuser@example.com"
+            fill_in "Password",                :with => "foobar"
+            fill_in "Password confirmation",   :with => "foobar"
+            click_button "Sign up"
+            response.should render_template('lists/index')
+            response.should render_template('devise/registrations/new')
+          end.should change(User, :count).by(1)
+        end
      end
   end
       

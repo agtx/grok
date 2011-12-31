@@ -1,27 +1,12 @@
 class PagesController < ApplicationController
-  
+    
   def home
-    @user = current_user
-    if signed_in?  
-
-      if @user.lists.empty?
-        make_list_for_today(@user)                   
-        @list = current_user.lists.find_by_id(cookies[:current_list_id])
-        
-      elsif current_list.nil?
-        @current_list = List.default_location(@user).first
-        @list = current_list
-      else
-        @list = current_user.lists.find_by_id(cookies[:current_list_id])
-      end                                    
+    if signed_in?
+      redirect_to '/lists/'
     end
   end
 
   def about
-  end
-  
-  def show
-    
   end
 
   def help

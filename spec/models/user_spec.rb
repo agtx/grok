@@ -46,26 +46,41 @@ describe User do
     user_with_duplicate_email = User.new(@attr)
     user_with_duplicate_email.should_not be_valid
   end  
+  
+  describe "lists associations" do
+    
+    before(:each) do
+      @user = User.create(@attr)
+      @list = Factory(:list, :user => @user)
+    end
+    
+    it "should have a list attribute" do
+      @user.should respond_to(:lists)
+    end
+    
+    it "should destroy associated lists" do
+      @user.destroy
+      List.find_by_id(@list.id).should be_nil
+    end  
+  end
+  
+  describe "admin attribute" do
+  
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+  
+    it "should respond to admin" do
+      @user.should respond_to(:admin)
+    end
+  
+    it "should not be an admin by default" do
+      @user.should_not be_admin
+    end
+  
+    it "should be convertible to an admin" do
+      @user.toggle!(:admin)
+      @user.should be_admin
+    end
+  end    
 end  
-  # describe "admin attribute" do
-  # 
-  #   before(:each) do
-  #     @user = User.create!(@attr)
-  #   end
-  # 
-  #   it "should respond to admin" do
-  #     @user.should respond_to(:admin)
-  #   end
-  # 
-  #   it "should not be an admin by default" do
-  #     @user.should_not be_admin
-  #   end
-  # 
-  #   it "should be convertible to an admin" do
-  #     @user.toggle!(:admin)
-  #     @user.should be_admin
-  #   end
-  # end    
-
-
-

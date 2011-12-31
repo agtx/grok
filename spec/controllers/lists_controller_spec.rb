@@ -26,94 +26,22 @@ describe ListsController do
      @user = test_sign_in(Factory(:user, :email => Factory.next(:email)))
     end
     
-    describe "failure" do
+    describe "for today" do
       
       before(:each) do
-        @attr = ""
-      end
-      
-            it "should not create list" do
-              lambda do
-                @list = Factory(:list, :user => @user, :name => @attr)
-                post :create, :id => @list, :user_id => @list
-              end.should_not change(List, :count)
-            end
-            
-      it "should re-render the home page" do
-        post :create, :id => @list, :user_id => @list, :name => @attr
-          response.should redirect_to root_path
-      end
-    end
-    
-    describe "success" do
-      
-      before(:each) do
-        @attr = Time.now.strftime("%A")        
-        @list = Factory(:list, :user => @user)
-        10.times { Factory(:list, :user => Factory(:user, 
-                            :email => Factory.next(:email)), :name => @attr)}
+        @attr = { :name => Date.today }
       end
 
       it "should create a new list" do
         lambda do
-        post :create, :id => @list, :user_id => @list, @list.name => @attr
+        post :create, :list => @attr
         end.should change(List, :count).by(1)
-      end
-    end  
-  
-      # describe "daily list creation" do
-    
-      #Testing cronjobs is proving too time consuming and will be put in later
-        
-      #   it "should display named after the current day" do
-      #     post :create, :id => @list, :user_id => @list, @list.name => @attr
-      #     response.should redirect_to(root_path)
-      #     response.should have_selector('h1', :content => Time.now.strftime("%A"))
-      #   end
-
-      
-    describe "list for tomorrow" do
-      
-      before(:each) do
-        @attr = Date.tomorrow.strftime("%A")        
-        @list = Factory(:list, :user => @user)
       end
       
       it "should re-render the home page" do
-        post :create, :id => @list, :user_id => @list, @list.name => @attr
-        response.should redirect_to root_path
+        post :create, :list => @attr
+        response.should redirect_to lists_path(:list_id => 1)
       end
-      
-      it "should have tomorrow's title'" do
-        post :create, :id => @list, :user_id => @list, @list.name => @attr
-        response.should have_selector('h1', @attr)
-      end
-    end
-  end
-
-
-  
-  describe "lists associations" do
-    
-    before(:each) do
-      @user = Factory(:user)
-      @list1 = Factory(:list, :user => @user, :created_at => 1.day.ago)
-      @list2 = Factory(:list, :user => @user, :created_at => 1.hour.ago)
-    end
-    
-    it "should have a list attribute" do
-      @user.should respond_to(:lists)
-    end
-    
-    it "should destroy associated lists" do
-      @user.destroy
-      [@list1, @list2].each do |list|
-        List.find_by_id(list.id).should be_nil
-      end
-    end
-    
-    it "should have the right lists in the the right order" do
-      @user.lists.should == [@list2, @list1]
     end
   end
   
