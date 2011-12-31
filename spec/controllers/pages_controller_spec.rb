@@ -24,7 +24,7 @@ describe PagesController do
         
         it "should redirect to lists index" do
           get :home, :id => @user
-          response.should redirect_to('/lists/')
+          response.should redirect_to('/lists?list_position=1')
         end
       end
     end    

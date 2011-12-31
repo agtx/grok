@@ -1,7 +1,7 @@
 class AddPositionToLists < ActiveRecord::Migration
   def change
     add_column :lists, :position, :integer
-    remove_index :lists, :name
+
     List.reset_column_information
     
     list = List.find(:all)
