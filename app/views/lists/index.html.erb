@@ -6,12 +6,11 @@
 				<tr>
 					<td>		
 						<div data-pjax-container>
-
+						
 						  <% if @list %>
 						    <div id="current_list">
 								<h3><%= @list.name.to_date.strftime("%A") %></h3>
 							</div>
-							<% current_list = @list %>
 						  <% end %>
 			
 						  <% if @list == @user.lists.last %>
@@ -20,24 +19,24 @@
 						  <% else %>				
 		   					<div class="forwardlist">
 								<h2>
-									<%= link_to "Plan for tomorrow", :list_id => current_list.lower_item.id %> 
+									<%= link_to "Plan for tomorrow", :list_position => @list.lower_item.position %> 
 								</h2>
 							</div>  
 						  <% end %>
 
-					 	</div>				
-								
-						<% unless today_list?(current_list) %>
+						<% unless today_list?(@list) %>
 							<div class="backlist">
 							    <h2>
-							      <%= link_to "back", :list_id => current_list.higher_item.id %> 
+							      <%= link_to "back", :list_position => @list.higher_item.position %> 
 								</h2>
 							</div>
 						<% end %>
+
+					 	</div>				
+								
 					</td>
 				</tr>
 			</table>
 	    </td>
 	</tr>
 </table>
-

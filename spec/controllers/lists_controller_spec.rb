@@ -40,7 +40,7 @@ describe ListsController do
       
       it "should re-render the home page" do
         post :create, :list => @attr
-        response.should redirect_to lists_path(:list_id => 1)
+        response.should redirect_to lists_path(:list_position => 1)
       end
     end
   end

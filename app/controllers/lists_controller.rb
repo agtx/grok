@@ -4,21 +4,17 @@ class ListsController < ApplicationController
   
   def index
     @user = current_user
-    if @user.lists.empty?
-      @list = @user.lists.create!(:name => Date.today)
-    else                 
-      @list = params[:list_id] ? List.find(params[:list_id]) : List.default_location(@user).first
-    end
+    @list = params[:list_position] ? current_user.lists.find_by_position(params[:list_position]) : 
+                                     List.default_location(@user).first
   end
   
   def create
     @user = current_user
     @list = @user.lists.build(params[:list])
     if @list.save
-     self.current_list = @list
-      redirect_to lists_path(:list_id => @list.id)
+      redirect_to lists_path(:list_position => @list.position)
     else
-      render lists_path(:list_id => @list.higher_item), notice: "fail"
+      render lists_path(:list_position => @list.higher_item), notice: "fail"
     end
   end
   
@@ -51,6 +47,6 @@ class ListsController < ApplicationController
     end
     redirect_to lists_path
   end
-    
+
 end
 
